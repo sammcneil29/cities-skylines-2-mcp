@@ -149,6 +149,7 @@ Start the game, load a save, then ask Claude: "How are my city's finances?", "Zo
 | Tool | Description |
 |---|---|
 | `cs2_get_taxes` / `cs2_set_tax` | Tax rates for the four zone classes (clamped to game limits) |
+| `cs2_resource_tax` | Read or set the industrial tax rate of one produced resource (e.g. Minerals), or list them all |
 | `cs2_policies` / `cs2_set_policy` | City policies (with localized names) |
 | `cs2_service_budgets` / `cs2_set_service_budget` | Per-service budget sliders 50-150% |
 | `cs2_get_fees` / `cs2_set_fee` | Service fees (electricity/water/healthcare/education...) |

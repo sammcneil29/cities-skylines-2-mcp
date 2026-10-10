@@ -69,6 +69,8 @@ namespace CS2MCP
                     return GetTaxes();
                 case "/city/taxes/set":
                     return HandleSetTax(request);
+                case "/city/taxes/resource":
+                    return HandleResourceTax(request);
                 case "/city/policies":
                     return GetPolicies();
                 case "/city/policies/set":

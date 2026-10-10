@@ -293,6 +293,31 @@ server.registerTool(
   },
 );
 
+server.registerTool(
+  "cs2_resource_tax",
+  {
+    title: "Industrial tax rate per resource",
+    description:
+      "Read or set the industrial tax rate of one produced resource (the per-resource sliders in the Taxes " +
+      "panel), e.g. Minerals. Give only a resource to read it, add rate to set it (clamped to the game range). " +
+      "Without a resource, lists every resource's rate. A lower rate attracts more companies making that resource.",
+    inputSchema: {
+      resource: z.string().optional().describe("Resource name from cs2_production, e.g. Minerals"),
+      rate: z.number().int().optional().describe("New tax rate in percent; omit to only read"),
+    },
+  },
+  async ({ resource, rate }) => {
+    try {
+      const q = new URLSearchParams();
+      if (resource !== undefined) q.set("resource", resource);
+      if (rate !== undefined) q.set("rate", String(rate));
+      return jsonResult(await bridgeJson(`/city/taxes/resource?${q.toString()}`));
+    } catch (err) {
+      return errorResult(err);
+    }
+  },
+);
+
 registerJsonTool(
   "cs2_policies",
   "List city policies",
@@ -524,7 +549,8 @@ server.registerTool(
     title: "Upgrade a road segment",
     description:
       "Apply upgrades to an existing road segment (from cs2_list_roads): grass, trees, wideSidewalk, " +
-      "soundBarrier, parking, lighting, medianGrass, medianTrees. Combine multiple with commas. " +
+      "soundBarrier, parking, lighting, medianGrass, medianTrees, tram, tramSecondary, tramStop (tram track and stop " +
+      "flags; not yet verified in game). Combine multiple with commas. " +
       "The segment is recreated with the new composition via the game's tool pipeline.",
     inputSchema: {
       index: z.number().int().describe("Road segment entity index"),
